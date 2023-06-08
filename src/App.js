@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import WeatherCard from './views/WeatherCard';
 import { getMoment } from './utils/helpers';
 import useWeatherAPI from './hooks/useWeatherAPI';
+import WeatherSetting from './views/weatherSetting';
+import { useState } from 'react';
 
 
 const Container = styled.div`
@@ -26,11 +28,15 @@ const LOCATIONT_NAME_FORCAST='臺北市'
 
 
 const App = () => {
-  console.log('invoke funciotn component')
+  console.log('invoke function component')
+  const [currentPage, setCurrentPage] = useState('WeatherCard')
   const [weatherElement,fetcData] = useWeatherAPI({
     locationName:LOCATIONT_NAME, cityName:LOCATIONT_NAME_FORCAST,
     authorizationKey:AUTHORIZATION_KEY
   })
+  const handleCurrentPageChange = (currentPage) => {
+    setCurrentPage(currentPage)
+  }
   
   
   
@@ -42,8 +48,14 @@ const App = () => {
 
   return (
     <Container>
-      {console.log('render')}
-      <WeatherCard weatherElement={weatherElement} moment={moment} fetcData={fetcData}/>
+      {currentPage === 'WeatherCard' &&(
+        <WeatherCard weatherElement={weatherElement} 
+        moment={moment} 
+        fetcData={fetcData} 
+        handleCurrentPageChange={handleCurrentPageChange}/>
+      )}
+      {currentPage === 'WeatherSetting' && 
+      <WeatherSetting handleCurrentPageChange={handleCurrentPageChange}/>}
     </Container>
   );
 };
