@@ -33,7 +33,7 @@ const fetchWeatherForcast = ({cityName, authorizationKey}) => {
     return fetch(`https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${authorizationKey}&locationName=${locationName}`)
     .then((response)=>response.json())
     .then((data)=>{
-      
+        console.log(data)
       const locationData = data.records.location[0];
       const weatherElements = locationData.weatherElement.reduce(
         (neededElements, item) => {
@@ -97,7 +97,7 @@ const useWeatherAPI = ({locationName, cityName, authorizationKey}) => {
         fetcData();
         // fetchCurrentWeather()
         // fetchWeatherForcast()
-      },[])
+      },[fetcData])
     return [weatherElement, fetcData]
 };
 
